@@ -1,0 +1,59 @@
+try:
+    import tkinter as tk
+except ImportError:
+    import Tkinter as tk
+import threading
+import time
+explanation = 5
+class test:
+        def __init__(self, parent):
+                self.x = 0
+                self.w1 = tk.Label(root).pack(side="right")
+
+                self.label = tk.Label(root)
+                self.label.pack()
+
+                self.w2 = tk.Label(root, justify="left", padx=10, text=0, font="Helvetica 16 bold italic").pack(
+                        side="left")
+                self.w3 = tk.Button(root, text="Cancel", font="Helvetica 16 bold italic", command=root.destroy)
+                self.w3.pack(side="bottom")
+                self.w2.after(1000, refresh)
+        def refresh(self):
+                self.x += 1
+                self.w2.configure(text=self.x)
+                self.w2.after(1000, refresh)
+def foo1(tk_instance):
+        global explanation
+        global root
+
+        while explanation > 0:
+                w2.cofigure(text = explanation)
+                explanation = explanation - 1
+                time.sleep(5)
+                root.after(1000, foo1)
+
+
+def foo2(tk_instance):
+        global root
+        global explanation
+        root = tk.Tk()
+        root.title("HELIOS")
+
+        root.mainloop()
+
+
+def notify_end():
+        root.destroy()
+
+
+def break_foo1():
+        t_foo1.cancel()
+        root.destroy()
+
+
+root = tk.Tk()
+t_foo1 = threading.Thread(target=foo1, args=(root,))
+t_foo2 = threading.Thread(target=foo2, args=(root,))
+
+t_foo1.start()
+t_foo2.start()
